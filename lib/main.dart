@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_app/views/login_view.dart';
 import 'package:my_app/views/home_view.dart';
 import 'package:my_app/views/loading_view.dart';
+import 'package:my_app/views/wallet_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,6 +96,11 @@ class _MyAppState extends State<MyApp> {
         GoRoute(path: '/', builder: (_, __) => const HomeView()),
         GoRoute(path: '/login', builder: (_, __) => const LoginView()),
         GoRoute(path: '/loading', builder: (_, __) => const LoadingView()),
+        GoRoute(
+          path: '/wallet/:walletId',
+          builder: (_, state) =>
+              WalletView(walletId: state.pathParameters['walletId']!),
+        ),
       ],
       redirect: (context, state) {
         final inLogin = state.matchedLocation == '/login';

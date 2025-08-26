@@ -1,5 +1,6 @@
 import 'package:dynamic_sdk/dynamic_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -124,7 +125,9 @@ class HomeView extends StatelessWidget {
 
                         return Column(
                           children: wallets
-                              .map((wallet) => _buildWalletCard(wallet))
+                              .map(
+                                (wallet) => _buildWalletCard(context, wallet),
+                              )
                               .toList(),
                         );
                       },
@@ -171,7 +174,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildWalletCard(BaseWallet wallet) {
+  Widget _buildWalletCard(BuildContext context, BaseWallet wallet) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -268,6 +271,17 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ],
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                context.push('/wallet/${wallet.id}');
+              },
+              icon: const Icon(Icons.open_in_new),
+              label: const Text('Open'),
+            ),
+          ),
         ],
       ),
     );
