@@ -3,6 +3,8 @@ import 'package:dynamic_sdk_web3dart/dynamic_sdk_web3dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:my_app/widgets/send_erc20_widget.dart';
+import 'package:my_app/widgets/network_switch_widget.dart';
 
 class WalletView extends StatefulWidget {
   final String walletId;
@@ -243,12 +245,15 @@ class _WalletViewState extends State<WalletView> {
                     'Wallet not found. Go back and select a wallet.',
                     style: TextStyle(color: Colors.red),
                   )
-                else
+                else ...[
                   _WalletHeader(
                     wallet: wallet,
                     balance: _balance,
                     loadingBalance: _loadingBalance,
                   ),
+                  const SizedBox(height: 16),
+                  NetworkSwitchWidget(wallet: wallet),
+                ],
                 const SizedBox(height: 16),
                 Card(
                   child: Padding(
@@ -350,6 +355,8 @@ class _WalletViewState extends State<WalletView> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+                if (wallet != null) SendErc20Widget(wallet: wallet),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
