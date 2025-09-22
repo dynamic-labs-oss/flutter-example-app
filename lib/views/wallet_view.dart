@@ -356,6 +356,8 @@ class _WalletViewState extends State<WalletView> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                if (wallet != null) SendErc20Widget(wallet: wallet),
+                const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
