@@ -117,18 +117,18 @@ packages:
     dependency: "direct main"
     description:
       name: dynamic_sdk
-      sha256: "913fbd95ab0aaeac4a99f427582aae246e5c7014e888b8a83ae417b2d8a9b601"
+      sha256: "3a2892b521d40dd6301f37b0f0c9f75ef8348b1b6a0bf3e4aafbce1bc2eb0195"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.0"
   dynamic_sdk_web3dart:
     dependency: "direct main"
     description:
       name: dynamic_sdk_web3dart
-      sha256: bbe0619bd05f73d6e140b4cc69a5312f2a19c3f4a52f5ac915ef5c7bb5316e7a
+      sha256: e13d5ab513245a9104a3ce06e63a7e4f8cbec6079013b9be6510eff93ecdc487
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.0"
   eip1559:
     dependency: transitive
     description:
