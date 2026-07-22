@@ -41,18 +41,23 @@ class _WalletViewState extends State<WalletView> {
     });
     try {
       final bal = await DynamicSDK.instance.wallets.getBalance(wallet: wallet);
+      if (!mounted) return;
+
       setState(() {
         _balance = bal;
       });
     } catch (e) {
+      if (!mounted) return;
+
       setState(() {
         _error = e.toString();
       });
     } finally {
-      if (!mounted) return;
-      setState(() {
-        _loadingBalance = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loadingBalance = false;
+        });
+      }
     }
   }
 
@@ -201,6 +206,8 @@ class _WalletViewState extends State<WalletView> {
       final transactionHash = await DynamicSDK.instance.web3dart
           .sendTransaction(transaction: transaction, wallet: wallet);
 
+      if (!mounted) return;
+
       setState(() {
         _lastTxHash = transactionHash;
       });
@@ -209,6 +216,8 @@ class _WalletViewState extends State<WalletView> {
         const SnackBar(content: Text('Mint transaction submitted')),
       );
     } catch (e) {
+      if (!mounted) return;
+
       setState(() {
         _error = e.toString();
       });
@@ -216,10 +225,11 @@ class _WalletViewState extends State<WalletView> {
         context,
       ).showSnackBar(SnackBar(content: Text('Mint failed: $e')));
     } finally {
-      if (!mounted) return;
-      setState(() {
-        _busy = false;
-      });
+      if (mounted) {
+        setState(() {
+          _busy = false;
+        });
+      }
     }
   }
 
@@ -413,7 +423,7 @@ class _WalletHeader extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
+                  color: Colors.blue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -430,6 +440,8 @@ class _WalletHeader extends StatelessWidget {
                 tooltip: 'Copy address',
                 onPressed: () async {
                   await Clipboard.setData(ClipboardData(text: wallet.address));
+                  if (!context.mounted) return;
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Address copied to clipboard'),

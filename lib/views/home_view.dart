@@ -125,9 +125,7 @@ class HomeView extends StatelessWidget {
 
                         return Column(
                           children: wallets
-                              .map(
-                                (wallet) => _buildWalletCard(context, wallet),
-                              )
+                              .map((wallet) => WalletCard(wallet: wallet))
                               .toList(),
                         );
                       },
@@ -173,8 +171,18 @@ class HomeView extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildWalletCard(BuildContext context, BaseWallet wallet) {
+class WalletCard extends StatelessWidget {
+  final BaseWallet wallet;
+
+  const WalletCard({super.key, required this.wallet});
+
+  @override
+  Widget build(BuildContext context) {
+    final isAuthenticated = wallet.isAuthenticated ?? false;
+    final additionalAddresses = wallet.additionalAddresses ?? const [];
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -207,7 +215,7 @@ class HomeView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
+                  color: Colors.blue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -245,25 +253,25 @@ class HomeView extends StatelessWidget {
           Row(
             children: [
               Icon(
-                wallet.isAuthenticated ? Icons.verified : Icons.warning,
-                color: wallet.isAuthenticated ? Colors.green : Colors.orange,
+                isAuthenticated ? Icons.verified : Icons.warning,
+                color: isAuthenticated ? Colors.green : Colors.orange,
                 size: 16,
               ),
               const SizedBox(width: 4),
               Text(
-                wallet.isAuthenticated ? 'Authenticated' : 'Not Authenticated',
+                isAuthenticated ? 'Authenticated' : 'Not Authenticated',
                 style: TextStyle(
-                  color: wallet.isAuthenticated ? Colors.green : Colors.orange,
+                  color: isAuthenticated ? Colors.green : Colors.orange,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
-          if (wallet.additionalAddresses.isNotEmpty) ...[
+          if (additionalAddresses.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
-              'Additional Addresses: ${wallet.additionalAddresses.length}',
+              'Additional Addresses: ${additionalAddresses.length}',
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,

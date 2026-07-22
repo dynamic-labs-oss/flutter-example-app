@@ -15,6 +15,7 @@ void main() {
       environmentId: '0322a696-4207-48c6-9ed4-ffb0aa896090',
       appLogoUrl: 'https://demo.dynamic.xyz/favicon-32x32.png',
       appName: 'Dynamic Demo',
+      appOrigin: 'https://demo.dynamic.xyz',
       redirectUrl: "flutterdemo://",
     ),
   );
